@@ -150,21 +150,35 @@ mapPinMain.addEventListener('keydown', function(evt) {
 });
 
 //валидация
-var typeOfHotel = document.querySelector('#capacity');
-typeOfHotel.addEventListener('click', function() {
-  var test = document.querySelector('#room_number');
-  if (test.options[test.selectedIndex].value === '1') {
-      document.querySelector('#value_three').setAttribute('disabled', true);
-      document.querySelector('#value_two').setAttribute('disabled', true);
-      document.querySelector('#not_a_guest').setAttribute('disabled', true)
-  } else if (test.options[test.selectedIndex].value === '2') {
-      document.querySelector('#value_three').setAttribute('disabled', true);
-      document.querySelector('#not_a_guest').setAttribute('disabled', true)
-  } else if (test.options[test.selectedIndex].value === '3') {
-      document.querySelector('#not_a_guest').setAttribute('disabled', true);
-  } else {
-      document.querySelector('#value_three').setAttribute('disabled', true);
-      document.querySelector('#value_two').setAttribute('disabled', true);
-      document.querySelector('#value_one').setAttribute('disabled', true);
-  }
-});
+
+var roomOptions = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+
+var roomNumber = document.querySelector('#room_number');
+var roomCapacity = document.querySelector('#capacity');
+
+var capacityList = roomCapacity.querySelectorAll('option');
+
+var calculateGuestsNumber = function (value) {
+  capacityList.forEach(function (option) {
+    option.disabled = true;
+  });
+
+  roomOptions[value].forEach(function (it) {
+    capacityList.forEach(function (opt) {
+      if (Number(opt.value) === it) {
+        opt.disabled = false;
+        opt.selected = true;
+      }
+  });
+});}
+
+calculateGuestsNumber(roomNumber.value);
+
+roomNumber.addEventListener('change', function (event) {
+  calculateGuestsNumber(event.target.value);
+})
