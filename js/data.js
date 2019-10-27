@@ -29,10 +29,6 @@
       return newArr;
   };
 
-  //локация
-  var makeLocation = function() {
-      return Math.floor(Math.random() * 1000) + ', ' + Math.floor(Math.random() * 1000)
-  }
   //прайс
   var makePrice = function() {
       return Math.floor(Math.random() * 1000) + ' рублей за ночь'
